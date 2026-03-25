@@ -2,13 +2,17 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches: [main, master] # ← слушаем обе ветки
+  workflow_dispatch: # ← ручной запуск
 
 permissions:
   contents: read
   pages: write
   id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -16,10 +20,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
-    defaults:
-      run:
-        working-directory: ./helpdesk/frontend
 
     steps:
       - name: Checkout
@@ -33,9 +33,11 @@ jobs:
           cache-dependency-path: "./helpdesk/frontend/package-lock.json"
 
       - name: Install dependencies
+        working-directory: ./helpdesk/frontend
         run: npm ci
 
       - name: Build
+        working-directory: ./helpdesk/frontend
         run: npm run build
 
       - name: Setup Pages
