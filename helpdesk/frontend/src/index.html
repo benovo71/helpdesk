@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HelpDesk</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>🔧 HelpDesk</h1>
+        <button class="btn btn-primary" id="addTicketBtn">+ Добавить</button>
+      </header>
+
+      <main>
+        <div id="ticketsList" class="tickets-list"></div>
+      </main>
+    </div>
+
+    <!-- Модальное окно создания/редактирования -->
+    <div id="modal" class="modal hidden">
+      <div class="modal-content">
+        <span class="modal-close" id="modalClose">&times;</span>
+        <h2 id="modalTitle">Новый тикет</h2>
+        <form id="ticketForm">
+          <input type="hidden" id="ticketId" />
+          <div class="form-group">
+            <label for="ticketName">Название *</label>
+            <input type="text" id="ticketName" required maxlength="100" />
+          </div>
+          <div class="form-group">
+            <label for="ticketDescription">Описание</label>
+            <textarea
+              id="ticketDescription"
+              rows="4"
+              maxlength="500"
+            ></textarea>
+          </div>
+          <div class="form-group checkbox">
+            <label>
+              <input type="checkbox" id="ticketStatus" />
+              Выполнено
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary" id="saveBtn">
+            Сохранить
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Модальное окно подтверждения удаления -->
+    <div id="confirmModal" class="modal hidden">
+      <div class="modal-content">
+        <h3>Удалить тикет?</h3>
+        <p>Это действие нельзя отменить.</p>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" id="cancelDelete">Отмена</button>
+          <button class="btn btn-danger" id="confirmDelete">Удалить</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
