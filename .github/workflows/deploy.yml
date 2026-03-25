@@ -2,17 +2,13 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main, master] # ← слушаем обе ветки
-  workflow_dispatch: # ← ручной запуск
+    branches: [main, master]
+  workflow_dispatch:
 
 permissions:
   contents: read
   pages: write
   id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
   build-and-deploy:
@@ -33,11 +29,11 @@ jobs:
           cache-dependency-path: "./helpdesk/frontend/package-lock.json"
 
       - name: Install dependencies
-        working-directory: ./helpdesk/frontend
+        working-directory: ./helpdesk/frontend # ← Путь к frontend
         run: npm ci
 
       - name: Build
-        working-directory: ./helpdesk/frontend
+        working-directory: ./helpdesk/frontend # ← Путь к frontend
         run: npm run build
 
       - name: Setup Pages
@@ -46,7 +42,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./helpdesk/frontend/dist
+          path: ./helpdesk/frontend/dist # ← Путь к dist
 
       - name: Deploy to GitHub Pages
         id: deployment
